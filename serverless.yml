@@ -1,0 +1,31 @@
+service: ctb-prototype
+
+frameworkVersion: '2'
+
+plugins:
+  - serverless-offline
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  lambdaHashingVersion: 20201221
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+  # deploymentBucket:
+  #   name: ctb_prototype_us-east-1
+
+functions:
+  getUser:
+    description: get user profile
+    handler: lambda/user.getUser
+    events:
+      - http:
+          path: /{id}
+          method: get
+  getAllUsers:
+    description: get all users profile
+    handler: lambda/user.getAllUsers
+    events:
+      - http:
+          path: /users
+          method: get
